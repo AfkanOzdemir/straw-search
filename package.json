@@ -1,16 +1,29 @@
 {
   "name": "straw-search",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
+  "bin": {
+    "straw-search": "./src/bin/cli.ts"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "cli": "NODE_OPTIONS=\"--loader ts-node/esm\" node src/bin/cli.ts"
   },
   "devDependencies": {
     "@types/node": "^22.15.17",
+    "terser": "^5.39.1",
+    "ts-node": "^10.9.2",
     "typescript": "~5.8.3",
     "vite": "^6.3.5"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0",
+    "commander": "^13.1.0",
+    "node-fetch": "^3.3.2",
+    "ora": "^8.2.0",
+    "puppeteer": "^24.8.2"
   }
 }

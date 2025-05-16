@@ -1,9 +1,9 @@
 export interface StrawSearchOptions {
-    inputElement: HTMLInputElement;
-    resultsElement: HTMLDivElement;
-    dataUrl: string;
-    isData: boolean;
-    data: StrawSearchData[]
+    inputElement?: HTMLInputElement;
+    resultsElement?: HTMLDivElement;
+    dataUrl?: string;
+    isData?: boolean;
+    data?: StrawSearchData[]
 }
 
 export interface StrawSearchData {

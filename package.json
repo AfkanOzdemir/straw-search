@@ -1,17 +1,36 @@
 {
   "name": "straw-search",
-  "private": true,
   "version": "1.0.0",
+  "description": "A crawler and search engine for websites",
   "type": "module",
+  "main": "dist/strawsearch.cjs.js",
+  "module": "dist/strawsearch.es.js",
+  "types": "./dist/index.d.ts",
   "bin": {
-    "straw-search": "./src/bin/cli.ts"
+    "crawler": "bin/cli.js"
   },
+  "files": [
+    "dist",
+    "bin",
+    "LICENSE",
+    "README.md"
+  ],
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "node build.js",
     "preview": "vite preview",
+    "prepare": "npm run build",
     "cli": "NODE_OPTIONS=\"--loader ts-node/esm\" node src/bin/cli.ts"
   },
+  "keywords": [
+    "crawler",
+    "search",
+    "web-scraping",
+    "indexing",
+    "full-text-search"
+  ],
+  "author": "",
+  "license": "MIT",
   "devDependencies": {
     "@types/node": "^22.15.17",
     "terser": "^5.39.1",
@@ -24,6 +43,7 @@
     "commander": "^13.1.0",
     "node-fetch": "^3.3.2",
     "ora": "^8.2.0",
-    "puppeteer": "^24.8.2"
+    "puppeteer": "^24.8.2",
+    "robots-parser": "^3.0.1"
   }
 }

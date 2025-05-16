@@ -1,11 +1,12 @@
+#!/usr/bin/env node
+
+import { Command } from 'commander';
+import fs from 'fs/promises';
 import fetch from 'node-fetch';
 import { load } from 'cheerio';
-import fs from 'fs/promises';
 import ora from 'ora';
-import type { CrawlerOptions, CrawlerResult } from './types/crawler.d.ts';
-const visited = new Set<string>();
 
-export async function crawlSite(options: CrawlerOptions) {
+async function crawlSite(options) {
   const { rootUrl, outputFile } = options;
   const spinner = ora({
     text: `Scanning: ${rootUrl}`,
@@ -13,8 +14,9 @@ export async function crawlSite(options: CrawlerOptions) {
     color: 'cyan'
   }).start();
   
-  const queue: string[] = [rootUrl];
-  const results: CrawlerResult[] = [];
+  const visited = new Set();
+  const queue = [rootUrl];
+  const results = [];
   let processedCount = 0;
 
   while (queue.length > 0) {
@@ -103,8 +105,8 @@ export async function crawlSite(options: CrawlerOptions) {
         .get()
         .filter(Boolean)
         .map((href) => {
-          if (href!.startsWith('/')) return new URL(href!, rootUrl).href;
-          return href!;
+          if (href.startsWith('/')) return new URL(href, rootUrl).href;
+          return href;
         })
         .filter((link) => link.startsWith(rootUrl) && !visited.has(link));
 
@@ -113,7 +115,7 @@ export async function crawlSite(options: CrawlerOptions) {
       }
 
       queue.push(...links);
-    } catch (error: any) {
+    } catch (error) {
       spinner.warn(`❌ Skipped: ${currentUrl}: ${error.message}`);
       spinner.start();
     }
@@ -124,3 +126,18 @@ export async function crawlSite(options: CrawlerOptions) {
   await fs.writeFile(outputFile, JSON.stringify(results), 'utf-8');
   console.log(`📄 Results saved to: ${outputFile}`);
 }
+
+const program = new Command();
+
+program
+  .name('crawler')
+  .description('Crawl a website and generate a searchable index')
+  .version('1.0.0')
+  .argument('<url>', 'Root URL to crawl')
+  .option('-o, --output <file>', 'Output file path', 'index.json')
+  .action(async (url, options) => {
+    console.log(`🔍 Crawling ${url} and saving results to ${options.output}`);
+    await crawlSite({ rootUrl: url, outputFile: options.output });
+  });
+
+program.parse(); 

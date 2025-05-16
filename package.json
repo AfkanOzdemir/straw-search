@@ -1,6 +1,6 @@
 {
   "name": "straw-search",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A crawler and search engine for websites",
   "type": "module",
   "main": "dist/strawsearch.cjs.js",
@@ -12,6 +12,7 @@
   "files": [
     "dist",
     "bin",
+    "public",
     "LICENSE",
     "README.md"
   ],

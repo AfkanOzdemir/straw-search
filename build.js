@@ -29,6 +29,27 @@ try {
   console.error('Error building with vite:', error);
 }
 
+// Public klasörünün içeriğini dist klasörüne kopyalama
+console.log('📦 Copying public assets to dist...');
+try {
+  const publicDir = path.join(process.cwd(), 'public');
+  const distDir = path.join(process.cwd(), 'dist');
+  
+  if (!fs.existsSync(distDir)) {
+    fs.mkdirSync(distDir, { recursive: true });
+  }
+  
+  // Public klasöründeki tüm dosyaları kopyala
+  fs.readdirSync(publicDir).forEach(file => {
+    const srcPath = path.join(publicDir, file);
+    const destPath = path.join(distDir, file);
+    fs.copyFileSync(srcPath, destPath);
+    console.log(`✅ Copied ${file} to dist folder`);
+  });
+} catch (error) {
+  console.error('Error copying public assets:', error);
+}
+
 // CLI dosyasını kopyalama
 console.log('📦 Creating CLI binary...');
 try {
@@ -46,4 +67,5 @@ try {
 // Özet
 console.log('\n✨ Build complete!');
 console.log('📁 Distribution files are in "dist" directory');
-console.log('📁 CLI binary is in "bin" directory'); 
+console.log('📁 CLI binary is in "bin" directory');
+console.log('🖼️ Public assets are copied to dist directory'); 

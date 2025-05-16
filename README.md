@@ -2,7 +2,7 @@
 
 **StrawSearch** is a tool that indexes websites and allows you to perform searches on them.
 
-![Cryptoria Password Generator](/public/strawSearchLogo.png)
+![strawSearch](https://github.com/user-attachments/assets/9dda99cc-a528-450a-9993-3bf64b8c5ed9)
 
 ## Installation
 
